@@ -36,6 +36,9 @@ public class TableInfo extends Model<TableInfo> {
     @Schema(description = "字段名称")
     private String columnName;
 
+    @Schema(description = "字段描述")
+    private String columnComment;
+
     @Schema(description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
