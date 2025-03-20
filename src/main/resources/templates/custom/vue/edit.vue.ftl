@@ -1,20 +1,12 @@
 <script lang="ts" setup>
-    import {FormInstance} from 'element-plus/es'
-    import {computed, reactive, ref, watch} from 'vue'
-    import {FormRules, UploadFile} from 'element-plus'
-    import {$
-
-    {
-        tableInfo.tableNameGreatHump
-    }
-    UpdateDto
-    }
-    from
-    '@/interface/dto/'
-    import {resData} from '@/interface/res'
-    import {useCommonStore} from "@/pinia/common";
-    import {DictionaryTypeVo} from '@/interface/vo/dictionaryInfo/DictionaryTypeVo'
-    import {TreeNode} from '@/interface/base/TreeNode'
+import {FormInstance} from 'element-plus/es'
+import {computed, reactive, ref, watch} from 'vue'
+import {FormRules, UploadFile} from 'element-plus'
+import {${tableInfo.tableNameGreatHump}UpdateDto} from '@/interface/dto/${tableInfo.tableNameGreatHump}UpdateDto'
+import {resData} from '@/interface/res'
+import {useCommonStore} from "@/pinia/common";
+import {DictionaryTypeVo} from '@/interface/vo/dictionaryInfo/DictionaryTypeVo'
+import {TreeNode} from '@/interface/base/TreeNode'
 
     <#--上传类型组件需要导入UploadFile-->
     <#--选择类组件如果展示字典中的数据，则需要导入DictionaryTypeVo-->

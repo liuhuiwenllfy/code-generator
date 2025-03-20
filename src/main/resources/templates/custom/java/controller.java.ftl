@@ -62,7 +62,7 @@ public class ${tableInfo.tableNameGreatHump}Controller {
      * @return {@link RespJson}
      */
     @GetMapping("queryById")
-    @Operation(summary = "根据字典id查询${tableInfo.tableComment!}")
+    @Operation(summary = "根据id查询${tableInfo.tableComment!}")
     public RespJson<${tableInfo.tableNameGreatHump}Vo> queryById(@Parameter(description = "主键", required = true) String id) {
         return RespJson.success(service.queryById(id));
     }

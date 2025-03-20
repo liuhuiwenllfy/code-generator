@@ -99,6 +99,9 @@ public class TableInfo extends Model<TableInfo> {
     @Schema(description = "UI类型")
     private String uiType;
 
+    @Schema(description = "字典分组名称")
+    private String dictGroup;
+
     @Schema(description = "修改时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;

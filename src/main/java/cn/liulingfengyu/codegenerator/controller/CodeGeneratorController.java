@@ -2,9 +2,11 @@ package cn.liulingfengyu.codegenerator.controller;
 
 import cn.liulingfengyu.codegenerator.dto.GenerateCodeDto;
 import cn.liulingfengyu.codegenerator.dto.TableInfoDto;
+import cn.liulingfengyu.codegenerator.emnus.UiTypeEnum;
 import cn.liulingfengyu.codegenerator.service.ICodeGeneratorService;
 import cn.liulingfengyu.codegenerator.vo.TableAndFieldVo;
 import cn.liulingfengyu.codegenerator.vo.TableIdAndCommentVo;
+import cn.liulingfengyu.codegenerator.vo.UiTypeVo;
 import cn.liulingfengyu.utils.RespJson;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 代码生成器控制器
@@ -75,5 +78,16 @@ public class CodeGeneratorController {
     @Operation(summary = "生成代码")
     public RespJson<Boolean> generateCode(@Validated @RequestBody GenerateCodeDto generateCodeDto) {
         return RespJson.state(service.generateCode(generateCodeDto));
+    }
+
+    /**
+     * 获取UI类型
+     *
+     * @return {@link RespJson}
+     */
+    @GetMapping("/getUiTypeList")
+    @Operation(summary = "获取数据库列表")
+    public RespJson<List<UiTypeVo>> getUiTypeList() {
+        return RespJson.success(service.getUiTypeList());
     }
 }

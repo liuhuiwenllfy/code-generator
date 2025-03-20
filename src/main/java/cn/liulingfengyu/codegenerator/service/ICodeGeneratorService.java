@@ -2,10 +2,14 @@ package cn.liulingfengyu.codegenerator.service;
 
 import cn.liulingfengyu.codegenerator.dto.GenerateCodeDto;
 import cn.liulingfengyu.codegenerator.dto.TableInfoDto;
+import cn.liulingfengyu.codegenerator.emnus.UiTypeEnum;
 import cn.liulingfengyu.codegenerator.vo.TableAndFieldVo;
 import cn.liulingfengyu.codegenerator.vo.TableIdAndCommentVo;
+import cn.liulingfengyu.codegenerator.vo.UiTypeVo;
+import cn.liulingfengyu.utils.RespJson;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 刘凌枫羽工作室
@@ -44,4 +48,11 @@ public interface ICodeGeneratorService {
      * @return boolean
      */
     boolean generateCode(GenerateCodeDto generateCodeDto);
+
+    /**
+     * 获取UI类型
+     *
+     * @return {@link Map}
+     */
+    List<UiTypeVo> getUiTypeList();
 }

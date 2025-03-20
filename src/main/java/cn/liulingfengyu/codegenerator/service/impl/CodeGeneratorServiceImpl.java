@@ -7,6 +7,7 @@ import cn.liulingfengyu.codegenerator.convert.TableNameConvert;
 import cn.liulingfengyu.codegenerator.dto.GenerateCodeDto;
 import cn.liulingfengyu.codegenerator.dto.TableAndFieldDto;
 import cn.liulingfengyu.codegenerator.dto.TableInfoDto;
+import cn.liulingfengyu.codegenerator.emnus.UiTypeEnum;
 import cn.liulingfengyu.codegenerator.entity.CodeGeneratorParams;
 import cn.liulingfengyu.codegenerator.entity.DatabaseConnection;
 import cn.liulingfengyu.codegenerator.entity.TableInfo;
@@ -16,6 +17,7 @@ import cn.liulingfengyu.codegenerator.service.ICodeGeneratorService;
 import cn.liulingfengyu.codegenerator.service.ITableInfoService;
 import cn.liulingfengyu.codegenerator.vo.TableAndFieldVo;
 import cn.liulingfengyu.codegenerator.vo.TableIdAndCommentVo;
+import cn.liulingfengyu.codegenerator.vo.UiTypeVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -273,6 +275,19 @@ public class CodeGeneratorServiceImpl implements ICodeGeneratorService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<UiTypeVo> getUiTypeList() {
+        UiTypeEnum[] values = UiTypeEnum.values();
+        List<UiTypeVo> uiTypeVoList = new ArrayList<>();
+        for (UiTypeEnum uiTypeEnum : values) {
+            UiTypeVo uiTypeVo = new UiTypeVo();
+            uiTypeVo.setKey(uiTypeEnum.getCode());
+            uiTypeVo.setValue(uiTypeEnum.getMessage());
+            uiTypeVoList.add(uiTypeVo);
+        }
+        return uiTypeVoList;
     }
 
     private void generateJava(GenerateCodeDto generateCodeDto, CodeGeneratorParams codeGeneratorParams, TableInfoBo tableInfoBo, Map<String, Object> root) throws IOException, TemplateException {
