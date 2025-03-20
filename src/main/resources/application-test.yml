@@ -1,0 +1,27 @@
+server:
+  port: 8080  #端口配置
+spring:
+  #配置数据库
+  datasource:
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/admin_api_db?useUnicode=true&useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+          username: root
+          password: 1q@w3e4r
+          type: com.zaxxer.hikari.HikariDataSource
+          hikari:
+            connection-timeout: 30000
+            idle-timeout: 600000
+            max-lifetime: 1800000
+            maximum-pool-size: 15
+            minimum-idle: 5
+#日志配置
+logging:
+  level:
+    cn.liulingfengyu: debug  #日志级别
+  file:
+    path: log #日志输出路径

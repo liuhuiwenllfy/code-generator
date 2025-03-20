@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liulingfengyu.codegenerator.mapper.CodeGeneratorParamsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap"
+               type="cn.liulingfengyu.codegenerator.entity.CodeGeneratorParams">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="api" property="api"/>
+        <result column="author" property="author"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="delete_time" property="deleteTime"/>
+        <result column="delete_user" property="deleteUser"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="is_remove_prefix" property="isRemovePrefix"/>
+        <result column="java_project_address" property="javaProjectAddress"/>
+        <result column="module_name" property="moduleName"/>
+        <result column="package_name" property="packageName"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="version" property="version"/>
+        <result column="vue_project_address" property="vueProjectAddress"/>
+    </resultMap>
+
+    <select id="getByPage"
+            resultType="cn.liulingfengyu.codegenerator.vo.CodeGeneratorParamsVo">
+        select * from d_code_generator_params
+        <where>is_delete = false
+            <if test="dto.title != null and dto.title != ''">
+                and title like concat('%', #{dto.title}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="queryById"
+            resultType="cn.liulingfengyu.codegenerator.vo.CodeGeneratorParamsVo">
+        select *
+        from d_code_generator_params
+        <where>
+            id = #{id}
+        </where>
+    </select>
+    <select id="getList" resultType="cn.liulingfengyu.codegenerator.vo.CodeGeneratorParamsVo">
+        select * from d_code_generator_params order by create_time desc
+    </select>
+</mapper>

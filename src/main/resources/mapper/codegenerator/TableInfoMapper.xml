@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.liulingfengyu.codegenerator.mapper.TableInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap"
+               type="cn.liulingfengyu.codegenerator.entity.TableInfo">
+                <id column="id" property="id"/>
+                <result column="autofill_rule" property="autofillRule"/>
+                <result column="column_name" property="columnName"/>
+                <result column="create_time" property="createTime"/>
+                <result column="create_user" property="createUser"/>
+                <result column="database_name" property="databaseName"/>
+                <result column="delete_time" property="deleteTime"/>
+                <result column="delete_user" property="deleteUser"/>
+                <result column="is_add_param" property="isAddParam"/>
+                <result column="is_autofill" property="isAutofill"/>
+                <result column="is_condition" property="isCondition"/>
+                <result column="is_delete" property="isDelete"/>
+                <result column="is_fuzzy_query" property="isFuzzyQuery"/>
+                <result column="is_logic_delete" property="isLogicDelete"/>
+                <result column="is_primary_key" property="isPrimaryKey"/>
+                <result column="is_show" property="isShow"/>
+                <result column="is_update_param" property="isUpdateParam"/>
+                <result column="is_version" property="isVersion"/>
+                <result column="table_name" property="tableName"/>
+                <result column="ui_type" property="uiType"/>
+                <result column="update_time" property="updateTime"/>
+                <result column="update_user" property="updateUser"/>
+                <result column="version" property="version"/>
+    </resultMap>
+
+    <select id="getByPage"
+            resultType="cn.liulingfengyu.codegenerator.vo.TableInfoVo">
+        select * from d_table_info
+        <where> is_delete = false
+        </where>
+    </select>
+
+    <select id="queryById"
+            resultType="cn.liulingfengyu.codegenerator.vo.TableInfoVo">
+        select *
+        from d_table_info
+        <where>
+            id = #{id}
+        </where>
+    </select>
+</mapper>
