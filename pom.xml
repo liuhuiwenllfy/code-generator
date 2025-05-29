@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.5</version>
+        <version>3.5.0</version>
         <relativePath/>
     </parent>
     <groupId>cn.liulingfengyu</groupId>
@@ -15,13 +15,14 @@
     <description>code-generator</description>
     <!--配置-->
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>21</java.version>
         <mybatis-plus-boot-starter.version>3.5.3.1</mybatis-plus-boot-starter.version>
         <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
         <freemarker.version>2.3.31</freemarker.version>
         <dynamic-datasource-spring-boot-starter.version>3.6.1</dynamic-datasource-spring-boot-starter.version>
-        <cn.hutool-all.version>5.8.16</cn.hutool-all.version>
+        <cn.hutool-all.version>5.8.24</cn.hutool-all.version>
         <knife4j-openapi3-spring-boot-starter.version>4.4.0</knife4j-openapi3-spring-boot-starter.version>
+        <mysql-connector-j.version>8.2.0</mysql-connector-j.version>
     </properties>
     <dependencies>
         <dependency>
@@ -38,8 +39,9 @@
             <version>${mybatis-plus-boot-starter.version}</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql-connector-j.version}</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
