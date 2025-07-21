@@ -1,3 +1,4 @@
+<#-- @formatter:off -->
 package ${basicParameter.packageName}.${basicParameter.moduleName}.service;
 
 <#if tableInfo.isGenerateTreeSelect!false>

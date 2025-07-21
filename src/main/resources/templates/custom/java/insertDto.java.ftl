@@ -1,3 +1,4 @@
+<#-- @formatter:off -->
 package ${basicParameter.packageName}.${basicParameter.moduleName}.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;

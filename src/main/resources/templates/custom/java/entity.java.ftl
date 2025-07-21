@@ -1,3 +1,4 @@
+<#-- @formatter:off -->
 package ${basicParameter.packageName}.${basicParameter.moduleName}.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;

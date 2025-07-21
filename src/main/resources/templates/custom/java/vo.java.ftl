@@ -1,3 +1,4 @@
+<#-- @formatter:off -->
 package ${basicParameter.packageName}.${basicParameter.moduleName}.vo;
 
 import cn.liulingfengyu.core.config.mybatisplus.entity.BaseInfo;

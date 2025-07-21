@@ -1,3 +1,4 @@
+<#-- @formatter:off -->
 package ${basicParameter.packageName}.${basicParameter.moduleName}.dto;
 
 import ${basicParameter.packageName}.core.config.mybatisplus.entity.PageInfo;

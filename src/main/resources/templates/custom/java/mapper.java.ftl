@@ -1,3 +1,4 @@
+<#-- @formatter:off -->
 package ${basicParameter.packageName}.${basicParameter.moduleName}.mapper;
 
 <#if tableInfo.isGenerateTreeSelect!false>
