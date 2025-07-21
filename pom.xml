@@ -18,12 +18,26 @@
         <java.version>21</java.version>
         <mybatis-plus-boot-starter.version>3.5.3.1</mybatis-plus-boot-starter.version>
         <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
-        <freemarker.version>2.3.31</freemarker.version>
         <dynamic-datasource-spring-boot-starter.version>3.6.1</dynamic-datasource-spring-boot-starter.version>
         <cn.hutool-all.version>5.8.24</cn.hutool-all.version>
-        <knife4j-openapi3-spring-boot-starter.version>4.4.0</knife4j-openapi3-spring-boot-starter.version>
+        <knife4j-openapi3-jakarta-spring-boot-starter.version>4.4.0
+        </knife4j-openapi3-jakarta-spring-boot-starter.version>
         <mysql-connector-j.version>8.2.0</mysql-connector-j.version>
+        <mybatis-plus-bom.version>3.5.11</mybatis-plus-bom.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>${mybatis-plus-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -35,8 +49,11 @@
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
@@ -59,8 +76,8 @@
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
-            <version>${knife4j-openapi3-spring-boot-starter.version}</version>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <version>${knife4j-openapi3-jakarta-spring-boot-starter.version}</version>
         </dependency>
         <!--模板引擎-->
         <dependency>

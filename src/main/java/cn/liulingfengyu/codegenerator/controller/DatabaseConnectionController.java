@@ -1,26 +1,19 @@
 package cn.liulingfengyu.codegenerator.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import cn.liulingfengyu.codegenerator.dto.DatabaseConnectionInsertDto;
+import cn.liulingfengyu.codegenerator.dto.DatabaseConnectionPageDto;
+import cn.liulingfengyu.codegenerator.dto.DatabaseConnectionUpdateDto;
 import cn.liulingfengyu.codegenerator.service.IDatabaseConnectionService;
 import cn.liulingfengyu.codegenerator.vo.DatabaseConnectionVo;
-import cn.liulingfengyu.codegenerator.dto.DatabaseConnectionPageDto;
-import cn.liulingfengyu.codegenerator.dto.DatabaseConnectionInsertDto;
-import cn.liulingfengyu.codegenerator.dto.DatabaseConnectionUpdateDto;
 import cn.liulingfengyu.utils.RespJson;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springdoc.api.annotations.ParameterObject;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

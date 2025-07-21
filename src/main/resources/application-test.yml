@@ -9,7 +9,7 @@ spring:
       datasource:
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/admin_api_db?useUnicode=true&useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
+          url: jdbc:mysql://127.0.0.1:3306/code_generator?useUnicode=true&useSSL=false&characterEncoding=utf8&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true
           username: root
           password: 1q@w3e4r
           type: com.zaxxer.hikari.HikariDataSource
