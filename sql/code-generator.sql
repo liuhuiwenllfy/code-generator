@@ -118,6 +118,7 @@ CREATE TABLE `d_table_info` (
   `is_add_param` tinyint(1) DEFAULT '0' COMMENT '是否作为新增参数',
   `is_update_param` tinyint(1) DEFAULT '0' COMMENT '是否作为修改参数',
   `ui_type` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'UI类型',
+  `dict_group` varchar(90) DEFAULT NULL COMMENT '字典分组名称',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `create_user` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '创建人',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
@@ -149,4 +150,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-20 16:04:38
+-- Dump completed on 2025-07-21 15:04:01
