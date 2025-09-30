@@ -131,7 +131,7 @@ public class CodeGeneratorServiceImpl implements ICodeGeneratorService {
 
                 String tablesSql = "SELECT TABLE_NAME, TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" + dataBase + "' and TABLE_NAME = '" + tableName + "'";
 
-                String columnsSql = "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT, COLUMN_KEY, COLUMN_TYPE, CHARACTER_MAXIMUM_LENGTH FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" + dataBase + "' AND TABLE_NAME = '" + tableName + "'";
+                String columnsSql = "SELECT COLUMN_NAME, DATA_TYPE, COLUMN_COMMENT, COLUMN_KEY, COLUMN_TYPE, CHARACTER_MAXIMUM_LENGTH FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" + dataBase + "' AND TABLE_NAME = '" + tableName + "' order by ORDINAL_POSITION";
 
                 String tableComment = null;
 
@@ -161,6 +161,12 @@ public class CodeGeneratorServiceImpl implements ICodeGeneratorService {
                         String tableAndColumnName = tableName.concat(columnsRs.getString("COLUMN_NAME"));
                         if (tableInfoMap.containsKey(tableAndColumnName)) {
                             BeanUtils.copyProperties(tableInfoMap.get(tableAndColumnName), tableInfo);
+                            if (tableInfo.getIsGenerateTreeSelect() == null) {
+                                tableInfo.setIsGenerateTreeSelect(false);
+                            }
+                            if (tableInfo.getIsCache() == null) {
+                                tableInfo.setIsCache(false);
+                            }
                         }
                         tableInfoList.add(tableInfo);
                     }
@@ -173,11 +179,14 @@ public class CodeGeneratorServiceImpl implements ICodeGeneratorService {
         return Collections.emptyList();
     }
 
-    public void setDataType(TableAndFieldVo tableAndFieldVo) {
+    private void setDataType(TableAndFieldVo tableAndFieldVo) {
         switch (tableAndFieldVo.getDataType()) {
             case "char":
             case "varchar":
             case "text":
+            case "tinytext":
+            case "mediumtext":
+            case "longtext":
                 tableAndFieldVo.setJavaType("String");
                 tableAndFieldVo.setTsType("string");
                 break;
@@ -197,8 +206,21 @@ public class CodeGeneratorServiceImpl implements ICodeGeneratorService {
                 tableAndFieldVo.setJavaType("Date");
                 tableAndFieldVo.setTsType("Date");
                 break;
+            case "timestamp":
+                tableAndFieldVo.setJavaType("Timestamp");
+                tableAndFieldVo.setTsType("string");
+                break;
             case "decimal":
+            case "numeric":
                 tableAndFieldVo.setJavaType("BigDecimal");
+                tableAndFieldVo.setTsType("number");
+                break;
+            case "float":
+                tableAndFieldVo.setJavaType("Float");
+                tableAndFieldVo.setTsType("number");
+                break;
+            case "double":
+                tableAndFieldVo.setJavaType("Double");
                 tableAndFieldVo.setTsType("number");
                 break;
             default:
@@ -234,9 +256,15 @@ public class CodeGeneratorServiceImpl implements ICodeGeneratorService {
         CodeGeneratorParams codeGeneratorParams = codeGeneratorParamsMapper.selectById(generateCodeDto.getCodeGeneratorParamsId());
 
         try {
+            Map<String, String> tableNameHumpMap = new HashMap<>();
             for (TableAndFieldDto tableAndFieldDto : generateCodeDto.getTableAndFieldDtoList()) {
                 TableInfoBo tableInfoBo = new TableInfoBo();
-                tableInfoBo.setIsGenerateTreeSelect(generateCodeDto.getIsGenerateTreeSelect());
+                tableInfoBo.setIsGenerateTreeSelect(tableAndFieldDto.getIsGenerateTreeSelect());
+                tableInfoBo.setIsCache(tableAndFieldDto.getIsCache());
+                tableInfoBo.setCacheKeyHump(StrUtil.toCamelCase(tableAndFieldDto.getCacheKey()));
+                tableInfoBo.setCacheValueHump(StrUtil.toCamelCase(tableAndFieldDto.getCacheValue()));
+                tableInfoBo.setCacheKeyBigHump(StringUtils.capitalize(StrUtil.toCamelCase(tableAndFieldDto.getCacheKey())));
+                tableInfoBo.setCacheValueBigHump(StringUtils.capitalize(StrUtil.toCamelCase(tableAndFieldDto.getCacheValue())));
                 tableInfoBo.setDatabaseName(tableAndFieldDto.getDatabaseName());
                 tableInfoBo.setTableName(tableAndFieldDto.getTableName());
                 tableInfoBo.setTableNameGreatHump(TableNameConvert.convertGreatHumpDelPrefix(tableAndFieldDto.getTableName(), codeGeneratorParams.getIsRemovePrefix() != null && codeGeneratorParams.getIsRemovePrefix()));
@@ -248,6 +276,14 @@ public class CodeGeneratorServiceImpl implements ICodeGeneratorService {
                     BeanUtils.copyProperties(item, tableField);
                     tableField.setColumnNameHump(StrUtil.toCamelCase(item.getColumnName()));
                     tableField.setColumnNameBigHump(StringUtils.capitalize(StrUtil.toCamelCase(item.getColumnName())));
+                    if (StrUtil.isNotBlank(item.getAssociatedTable())) {
+                        tableField.setAssociatedTableHump(TableNameConvert.convertHumpDelPrefix(item.getAssociatedTable(), codeGeneratorParams.getIsRemovePrefix() != null && codeGeneratorParams.getIsRemovePrefix()));
+                        tableField.setAssociatedTableBigHump(TableNameConvert.convertGreatHumpDelPrefix(item.getAssociatedTable(), codeGeneratorParams.getIsRemovePrefix() != null && codeGeneratorParams.getIsRemovePrefix()));
+                        tableField.setDropdownKeyHump(StrUtil.toCamelCase(item.getDropdownKey()));
+                        tableField.setDropdownValueHump(StrUtil.toCamelCase(item.getDropdownValue()));
+                        tableField.setDropdownKeyBigHump(StringUtils.capitalize(StrUtil.toCamelCase(item.getDropdownKey())));
+                        tableField.setDropdownValueBigHump(StringUtils.capitalize(StrUtil.toCamelCase(item.getDropdownValue())));
+                    }
                     tableFieldList.add(tableField);
                 });
                 tableInfoBo.setTableField(tableFieldList);
@@ -262,6 +298,9 @@ public class CodeGeneratorServiceImpl implements ICodeGeneratorService {
                 }
                 if (generateCodeDto.getIsGenerateVue()) {
                     generateVue(generateCodeDto, codeGeneratorParams, tableInfoBo, root);
+                }
+                if (tableAndFieldDto.getIsGenerateMenu()) {
+                    tableNameHumpMap.put(tableInfoBo.getTableNameHump(), tableInfoBo.getTableComment());
                 }
             }
             List<TableInfo> tableInfoList = BeanUtil.copyToList(generateCodeDto.getTableAndFieldDtoList(), TableInfo.class);
@@ -348,6 +387,10 @@ public class CodeGeneratorServiceImpl implements ICodeGeneratorService {
         File vueSearchFile = new File(codeGeneratorParams.getVueProjectAddress() + "/src/view/" + codeGeneratorParams.getModuleName() + "/" + tableInfoBo.getTableNameHump() + "/search/index.vue");
         Template vueSearchTemplate = freeMarkerConfiguration.getTemplate("custom/vue/search.vue.ftl");
         writeDocument(vueSearchFile, vueSearchTemplate, root, generateCodeDto.getIsCover());
+
+        File vueMenuFile = new File(codeGeneratorParams.getVueProjectAddress() + "/src/view/" + codeGeneratorParams.getModuleName() + "/" + tableInfoBo.getTableNameHump() + "/menu/index.vue");
+        Template vueMenuTemplate = freeMarkerConfiguration.getTemplate("custom/vue/menu.vue.ftl");
+        writeDocument(vueMenuFile, vueMenuTemplate, root, generateCodeDto.getIsCover());
 
         File vueVoFile = new File(codeGeneratorParams.getVueProjectAddress() + "/src/interface/vo/" + tableInfoBo.getTableNameHump() + "/" + tableInfoBo.getTableNameGreatHump() + "Vo.ts");
         Template vueVoTemplate = freeMarkerConfiguration.getTemplate("custom/vue/vo.ts.ftl");

@@ -4,37 +4,52 @@
 <mapper namespace="${basicParameter.packageName}.${basicParameter.moduleName}.mapper.${tableInfo.tableNameGreatHump}Mapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap"
-               type="${basicParameter.packageName}.${basicParameter.moduleName}.entity.${tableInfo.tableNameGreatHump}">
-        <#list tableInfo.tableField as field>
-            <#if field.isPrimaryKey!false>
-                <id column="${field.columnName}" property="${field.columnNameHump}"/>
-                <#break>
-            </#if>
-        </#list>
-        <#list tableInfo.tableField as field>
-            <#if !field.isPrimaryKey!false>
-                <result column="${field.columnName}" property="${field.columnNameHump}"/>
-            </#if>
-        </#list>
+    <resultMap id="BaseResultMap" type="${basicParameter.packageName}.${basicParameter.moduleName}.entity.${tableInfo.tableNameGreatHump}">
+<#list tableInfo.tableField as field>
+    <#if field.isPrimaryKey!false>
+        <id column="${field.columnName}" property="${field.columnNameHump}"/>
+    <#break>
+    </#if>
+</#list>
+<#list tableInfo.tableField as field>
+    <#if !field.isPrimaryKey!false>
+        <result column="${field.columnName}" property="${field.columnNameHump}"/>
+    </#if>
+</#list>
     </resultMap>
 
     <select id="getByPage"
             resultType="${basicParameter.packageName}.${basicParameter.moduleName}.vo.${tableInfo.tableNameGreatHump}Vo">
         select * from ${tableInfo.tableName}
-        <where> is_delete = false
-            <#list tableInfo.tableField as field>
-                <#if field.isCondition!false>
-                    <if test="dto.${field.columnNameHump} != null <#if field.javaType == 'String'>and dto.${field.columnNameHump} != ''</#if>">
-                        <#if field.isFuzzyQuery!false>
-                            and ${field.columnName} like concat('%', ${r"#{"}dto.${field.columnNameHump}${r"}"},'%')
-                        <#else>
-                            and ${field.columnName} = ${r"#{"}dto.${field.columnNameHump}${r"}"}
-                        </#if>
-                    </if>
-                </#if>
-            </#list>
+        <where>
+            is_delete = false
+<#list tableInfo.tableField as field>
+    <#if field.isCondition!false>
+        <#if field.uiType == "DATE_RANGE_SELECTION_BOX">
+            <if test="dto.${field.columnNameHump}Stat != null and dto.${field.columnNameHump}Stat != ''">
+                and ${field.columnName} &gt;= ${r"#{"}dto.${field.columnNameHump}Stat${r"}"}
+            </if>
+            <if test="dto.${field.columnNameHump}End != null and dto.${field.columnNameHump}End != ''">
+                and ${field.columnName} &lt;= ${r"#{"}dto.${field.columnNameHump}End${r"}"}
+            </if>
+        <#else>
+            <if test="dto.${field.columnNameHump} != null <#if field.javaType == 'String'>and dto.${field.columnNameHump} != ''</#if>">
+            <#if field.isFuzzyQuery!false>
+                and ${field.columnName} like concat('%', ${r"#{"}dto.${field.columnNameHump}${r"}"},'%')
+            <#else>
+                and ${field.columnName} = ${r"#{"}dto.${field.columnNameHump}${r"}"}
+            </#if>
+            </if>
+        </#if>
+    </#if>
+</#list>
         </where>
+    </select>
+
+    <select id="getList" resultType="${basicParameter.packageName}.${basicParameter.moduleName}.vo.${tableInfo.tableNameGreatHump}Vo">
+        select *
+        from ${tableInfo.tableName}
+        where is_delete = 0
     </select>
 
     <select id="queryById"
@@ -46,11 +61,11 @@
         </where>
     </select>
 
-    <#if tableInfo.isGenerateTreeSelect!false>
-    <select id="getList" resultType="${basicParameter.packageName}.core.config.mybatisplus.entity.TreeNode">
+<#if tableInfo.isGenerateTreeSelect!false>
+    <select id="getTree" resultType="${basicParameter.packageName}.core.config.mybatisplus.entity.TreeNode">
         select *
         from ${tableInfo.tableName}
         where is_delete = false
     </select>
-    </#if>
+</#if>
 </mapper>

@@ -7,12 +7,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 <#list tableInfo.tableField as field>
-<#if field.javaType == "Date">
-<#if field.isShow!false>
+    <#if field.isShow!false>
+        <#if field.javaType == "Date">
 import java.util.Date;
-<#break>
-</#if>
-</#if>
+        <#break>
+        </#if>
+    </#if>
 </#list>
 
 /**
@@ -30,9 +30,26 @@ public class ${tableInfo.tableNameGreatHump}Vo extends BaseInfo{
 
 <#list tableInfo.tableField as field>
     <#if field.isShow!false>
+        <#if field.columnNameHump != 'id' && field.columnNameHump != 'createUser' && field.columnNameHump != 'createTime' && field.columnNameHump != 'version'>
     @Schema(description = "${field.columnComment}")
     private ${field.javaType} ${field.columnNameHump};
 
+        </#if>
+    <#elseif field.isShowDetails!false>
+        <#if field.columnNameHump != 'id' && field.columnNameHump != 'createUser' && field.columnNameHump != 'createTime' && field.columnNameHump != 'version'>
+    @Schema(description = "${field.columnComment}")
+    private ${field.javaType} ${field.columnNameHump};
+
+        </#if>
+    </#if>
+</#list>
+<#list tableInfo.tableField as field>
+    <#if field.isShow!false>
+        <#if field.uiType?? && (field.uiType == "SELECT_BOX" || field.uiType == "OPTION_GROUP" || field.uiType == "TREE_SELECTION")>
+    @Schema(description = "${field.columnComment}名称")
+    private String ${field.columnNameHump}Name;
+
+        </#if>
     </#if>
 </#list>
 }

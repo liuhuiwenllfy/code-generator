@@ -2,11 +2,9 @@ package cn.liulingfengyu.codegenerator.service;
 
 import cn.liulingfengyu.codegenerator.dto.GenerateCodeDto;
 import cn.liulingfengyu.codegenerator.dto.TableInfoDto;
-import cn.liulingfengyu.codegenerator.emnus.UiTypeEnum;
 import cn.liulingfengyu.codegenerator.vo.TableAndFieldVo;
 import cn.liulingfengyu.codegenerator.vo.TableIdAndCommentVo;
 import cn.liulingfengyu.codegenerator.vo.UiTypeVo;
-import cn.liulingfengyu.utils.RespJson;
 
 import java.util.List;
 import java.util.Map;

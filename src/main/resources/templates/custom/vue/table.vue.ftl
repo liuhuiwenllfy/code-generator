@@ -1,3 +1,4 @@
+<#-- @formatter:off -->
 <script lang="ts" setup>
 import TableArea from 've-table-area/index.vue'
 import TableColumn from 've-table-column/index.vue'
@@ -8,9 +9,15 @@ import {ElMessage} from 'element-plus'
 import {${tableInfo.tableNameGreatHump}Vo} from '@/interface/vo/${tableInfo.tableNameHump}/${tableInfo.tableNameGreatHump}Vo'
 import {useCommonStore} from "@/pinia/common";
 import {hasBtnPermission} from "@/assets/js/common";
-import {createEmitter} from "@/assets/js/eventBus";
-
-const emitter = createEmitter()
+import {EventBus, EventName} from '@/assets/js/eventBus.ts'
+<#list tableInfo.tableField as field>
+    <#if field.isShowDetails!false>
+        <#if field.uiType?? && (field.uiType == "PICTURE_UPLOAD" || field.uiType == "PROFILE_PICTURE_UPLOAD")>
+import {getFileUrl} from "@/assets/js/common.ts";
+        <#break/>
+        </#if>
+    </#if>
+</#list>
 
 const commonStore = useCommonStore();
 
@@ -28,15 +35,18 @@ const props = defineProps({
 })
 
 const columnList = computed(() => [
-    <#list tableInfo.tableField as tableField>
-    <#if tableField.isAddParam!false>
+<#list tableInfo.tableField as field>
+    <#if field.isShow!false>
     {
         sortable: 'custom',
-        prop: '${tableField.columnNameHump}',
-        label: '${tableField.columnComment}'
+        prop: <#if field.uiType?? && (field.uiType == "SELECT_BOX" || field.uiType == "OPTION_GROUP" || field.uiType == "TREE_SELECTION")>'${field.columnNameHump}Name'<#else>'${field.columnNameHump}'</#if>,
+        <#if field.uiType?? && (field.uiType == "PICTURE_UPLOAD" || field.uiType == "PROFILE_PICTURE_UPLOAD")>
+        coverColumn: true,
+        </#if>
+        label: <#if field.uiType?? && (field.uiType == "SELECT_BOX" || field.uiType == "OPTION_GROUP" || field.uiType == "TREE_SELECTION")>'${field.columnComment}名称'<#else>'${field.columnComment}'</#if>
     },
     </#if>
-    </#list>
+</#list>
 ])
 
 const selected = ref<Array<${tableInfo.tableNameGreatHump}Vo>>([])
@@ -61,11 +71,11 @@ const handleClick = (type: string, id: string = '') => {
 }
 
 const onSortChange = (column: any) => {
-    emitter.emit('refresh', column)
+    EventBus.emit(EventName.REFRESH, column)
 }
 
 const handleRefresh = () => {
-    emitter.emit('refresh')
+    EventBus.emit(EventName.REFRESH)
 }
 
 const _fullScreen = ref(false)
@@ -86,7 +96,7 @@ const handleFullScreen = (fullScreen: boolean, tableHeight: number) => {
                     :icon="CirclePlus"
                     type="primary"
                     @click="handleClick('add')">
-                新增
+                {{ $t('message.add') }}
             </el-button>
             <el-button
                     v-if="hasBtnPermission('batchDelete')"
@@ -94,7 +104,7 @@ const handleFullScreen = (fullScreen: boolean, tableHeight: number) => {
                     plain
                     type="danger"
                     @click="handleClick('batchDelete')">
-                批量删除
+                {{ $t('message.batchDelete') }}
             </el-button>
         </template>
         <template #main>
@@ -116,6 +126,21 @@ const handleFullScreen = (fullScreen: boolean, tableHeight: number) => {
                         region-class="ve-table"
                         @handle-full-screen="handleFullScreen"
                         @handle-refresh="handleRefresh">
+<#list tableInfo.tableField as field>
+    <#if field.isShow!false>
+        <#if field.uiType??>
+            <#if field.uiType == "PROFILE_PICTURE_UPLOAD">
+                    <template #${field.columnNameHump}="scope">
+                        <el-avatar :src="getFileUrl(scope.row.${field.columnNameHump})" size="large" alt="default.png"/>
+                    </template>
+            <#elseif field.uiType == "PICTURE_UPLOAD">
+                    <template #${field.columnNameHump}="scope">
+                        <el-image :src="getFileUrl(scope.row.${field.columnNameHump})" style="width: 100px"  alt="default.png"/>
+                    </template>
+            </#if>
+        </#if>
+    </#if>
+</#list>
                     <template #default="scope">
                         <el-button
                                 v-if="hasBtnPermission('details')"
@@ -123,7 +148,7 @@ const handleFullScreen = (fullScreen: boolean, tableHeight: number) => {
                                 plain
                                 size="small"
                                 @click="handleClick('details', scope.row.id)">
-                            详情
+                            {{ $t('message.details') }}
                         </el-button>
                         <el-button
                                 v-if="hasBtnPermission('edit')"
@@ -132,7 +157,7 @@ const handleFullScreen = (fullScreen: boolean, tableHeight: number) => {
                                 size="small"
                                 type="primary"
                                 @click="handleClick('edit', scope.row.id)">
-                            修改
+                            {{ $t('message.edit') }}
                         </el-button>
                         <el-button
                                 v-if="hasBtnPermission('delete')"
@@ -141,7 +166,7 @@ const handleFullScreen = (fullScreen: boolean, tableHeight: number) => {
                                 size="small"
                                 type="danger"
                                 @click="handleClick('delete', scope.row.id)">
-                            删除
+                            {{ $t('message.delete') }}
                         </el-button>
                     </template>
                 </TableColumn>

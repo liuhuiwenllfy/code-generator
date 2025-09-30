@@ -1,18 +1,18 @@
 package cn.liulingfengyu.codegenerator.service.impl;
 
-import cn.liulingfengyu.codegenerator.entity.TableInfo;
-import cn.liulingfengyu.codegenerator.vo.TableInfoVo;
-import cn.liulingfengyu.codegenerator.dto.TableInfoPageDto;
 import cn.liulingfengyu.codegenerator.dto.TableInfoInsertDto;
+import cn.liulingfengyu.codegenerator.dto.TableInfoPageDto;
 import cn.liulingfengyu.codegenerator.dto.TableInfoUpdateDto;
+import cn.liulingfengyu.codegenerator.entity.TableInfo;
 import cn.liulingfengyu.codegenerator.mapper.TableInfoMapper;
 import cn.liulingfengyu.codegenerator.service.ITableInfoService;
+import cn.liulingfengyu.codegenerator.vo.TableInfoVo;
+import cn.liulingfengyu.core.config.mybatisplus.PageUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.liulingfengyu.core.config.mybatisplus.PageUtils;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class TableInfoServiceImpl extends ServiceImpl<TableInfoMapper, TableInfo
 
     @Override
     public boolean deleteBatchByIdList(List<String> idList) {
-        return baseMapper.deleteBatchIds(idList) > 0;
+        return baseMapper.deleteByIds(idList) > 0;
     }
 
 }

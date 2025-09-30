@@ -21,27 +21,27 @@ import lombok.Setter;
 public class DatabaseConnectionUpdateDto extends UpdateInfo {
 
     @Schema(description = "标题")
-    @NotBlank(message = "title.empty")
-    @Size(max = 90, message = "title.length")
+    @NotBlank(message = "标题不能为空")
+    @Size(max = 90, message = "标题长度在1~90字符之间")
     private String title;
 
     @Schema(description = "密码")
-    @NotBlank(message = "password.empty")
-    @Size(max = 30, message = "password.length")
+    @NotBlank(message = "密码不能为空")
+    @Size(max = 30, message = "密码长度在1~30字符之间")
     private String password;
 
     @Schema(description = "备注")
-    @Size(max = 300, message = "remark.length")
+    @Size(max = 300, message = "备注长度在1~900字符之间")
     private String remark;
 
     @Schema(description = "地址")
-    @NotBlank(message = "databaseUrl.empty")
-    @Size(max = 300, message = "databaseUrl.length")
+    @NotBlank(message = "数据库地址不能为空")
+    @Size(max = 300, message = "数据库地址不能为空")
     private String url;
 
     @Schema(description = "用户名")
-    @NotBlank(message = "username.empty")
-    @Size(max = 30, message = "username.length")
+    @NotBlank(message = "用户名称不能为空")
+    @Size(max = 30, message = "用户名称长度在1~20字符之间")
     private String username;
 
 }

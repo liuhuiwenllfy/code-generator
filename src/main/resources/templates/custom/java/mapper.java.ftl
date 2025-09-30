@@ -7,6 +7,7 @@ import ${basicParameter.packageName}.core.config.mybatisplus.entity.TreeNode;
 import ${basicParameter.packageName}.${basicParameter.moduleName}.entity.${tableInfo.tableNameGreatHump};
 import ${basicParameter.packageName}.${basicParameter.moduleName}.vo.${tableInfo.tableNameGreatHump}Vo;
 import ${basicParameter.packageName}.${basicParameter.moduleName}.dto.${tableInfo.tableNameGreatHump}PageDto;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -20,6 +21,7 @@ import java.util.List;
  * @author ${basicParameter.author}
  * @since ${date}
  */
+@DS("${basicParameter.moduleName}")
 public interface ${tableInfo.tableNameGreatHump}Mapper extends BaseMapper<${tableInfo.tableNameGreatHump}> {
 
     /**
@@ -32,6 +34,13 @@ public interface ${tableInfo.tableNameGreatHump}Mapper extends BaseMapper<${tabl
     List<${tableInfo.tableNameGreatHump}Vo> getByPage(Page<${tableInfo.tableNameGreatHump}Vo> page, ${tableInfo.tableNameGreatHump}PageDto dto);
 
     /**
+     * 查询${tableInfo.tableComment!}集合
+     *
+     * @return {@link List}
+     */
+    List<${tableInfo.tableNameGreatHump}Vo> getList();
+
+    /**
      * 根据id查询${tableInfo.tableComment!}
      *
      * @param id 主键
@@ -39,12 +48,12 @@ public interface ${tableInfo.tableNameGreatHump}Mapper extends BaseMapper<${tabl
      */
     ${tableInfo.tableNameGreatHump}Vo queryById(String id);
 
-    <#if tableInfo.isGenerateTreeSelect!false>
+<#if tableInfo.isGenerateTreeSelect!false>
     /**
      * 获取${tableInfo.tableComment!}
      *
      * @return {@link List}
      */
-    List<TreeNode> getList();
-    </#if>
+    List<TreeNode> getTree();
+</#if>
 }

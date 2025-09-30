@@ -16,10 +16,10 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 <#list tableInfo.tableField as field>
-<#if field.javaType == "Date">
+    <#if field.javaType == "Date">
 import java.util.Date;
-<#break>
-</#if>
+    <#break>
+    </#if>
 </#list>
 
 /**

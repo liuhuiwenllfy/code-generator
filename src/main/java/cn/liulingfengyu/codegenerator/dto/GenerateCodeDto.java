@@ -21,9 +21,6 @@ public class GenerateCodeDto extends TableInfoDto {
     @Schema(description = "是否生成java代码", requiredMode = Schema.RequiredMode.REQUIRED)
     private Boolean isGenerateJava;
 
-    @Schema(description = "是否生成树结构查询接口", requiredMode = Schema.RequiredMode.REQUIRED)
-    private Boolean isGenerateTreeSelect;
-
     @Schema(description = "是否生成vue代码", requiredMode = Schema.RequiredMode.REQUIRED)
     private Boolean isGenerateVue;
 

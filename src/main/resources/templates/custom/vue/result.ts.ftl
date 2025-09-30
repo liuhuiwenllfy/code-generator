@@ -1,3 +1,4 @@
+<#-- @formatter:off -->
 import {get, post, put, remove} from '@/api/http-server'
 
 const api = '${basicParameter.api!"api"}';
@@ -8,6 +9,14 @@ const api = '${basicParameter.api!"api"}';
  */
 export const get${tableInfo.tableNameGreatHump}ByPage = (params = {}) => {
     return get(`/${r"${api}"}/${basicParameter.moduleName}/${tableInfo.tableNameHump}/getByPage`, params)
+}
+
+/**
+ * 查询${tableInfo.tableComment!}
+ * @param params
+ */
+export const get${tableInfo.tableNameGreatHump}List = (params = {}) => {
+    return get(`/${r"${api}"}/${basicParameter.moduleName}/${tableInfo.tableNameHump}/getList`, params)
 }
 
 /**

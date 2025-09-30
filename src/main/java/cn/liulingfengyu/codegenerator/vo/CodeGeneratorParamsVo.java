@@ -37,6 +37,12 @@ public class CodeGeneratorParamsVo extends BaseInfo {
     @Schema(description = "模块名")
     private String moduleName;
 
+    @Schema(description = "模块中文名")
+    private String moduleCnName;
+
+    @Schema(description = "模块图标")
+    private String moduleIcon;
+
     @Schema(description = "包名")
     private String packageName;
 

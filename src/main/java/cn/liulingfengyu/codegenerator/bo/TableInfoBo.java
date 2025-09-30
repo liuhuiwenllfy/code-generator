@@ -45,9 +45,34 @@ public class TableInfoBo {
     private Boolean isGenerateTreeSelect;
 
     /**
+     * 是否开启缓存
+     */
+    private Boolean isCache;
+
+    /**
+     * 缓存key字段小驼峰
+     */
+    private String cacheKeyHump;
+
+    /**
+     * 缓存key字段大驼峰
+     */
+    private String cacheKeyBigHump;
+
+    /**
+     * 缓存value字段小驼峰
+     */
+    private String cacheValueHump;
+
+    /**
+     * 缓存value字段大驼峰
+     */
+    private String cacheValueBigHump;
+
+    /**
      * 字段信息
      */
-    private List<TableInfoBo.TableField> tableField;
+    private List<TableField> tableField;
 
     @Getter
     @Setter
@@ -129,6 +154,11 @@ public class TableInfoBo {
         private Boolean isShow;
 
         /**
+         * 是否在详情中展示
+         */
+        private Boolean isShowDetails;
+
+        /**
          * 是否作为条件
          */
         private Boolean isCondition;
@@ -149,13 +179,63 @@ public class TableInfoBo {
         private Boolean isUpdateParam;
 
         /**
+         * 是否必填
+         */
+        private Boolean isRequiredField;
+
+        /**
          * UI类型
          */
         private String uiType;
 
         /**
+         * 是否展示字典数据
+         */
+        private Boolean isShowDict;
+
+        /**
          * 选择框字典分组（用于选择框下拉展示的字典集合，不通过字典查询可不传入）
          */
         private String dictGroup;
+
+        /**
+         * 关联数据库小驼峰
+         */
+        private String associatedDatabaseHump;
+
+        /**
+         * 关联数据库大驼峰
+         */
+        private String associatedDatabaseBigHump;
+
+        /**
+         * 关联表小驼峰
+         */
+        private String associatedTableHump;
+
+        /**
+         * 关联表大驼峰
+         */
+        private String associatedTableBigHump;
+
+        /**
+         * 下拉Key字段小驼峰
+         */
+        private String dropdownKeyHump;
+
+        /**
+         * 下拉Key字段大驼峰
+         */
+        private String dropdownKeyBigHump;
+
+        /**
+         * 下拉Value字段小驼峰
+         */
+        private String dropdownValueHump;
+
+        /**
+         * 下拉Value字段大驼峰
+         */
+        private String dropdownValueBigHump;
     }
 }

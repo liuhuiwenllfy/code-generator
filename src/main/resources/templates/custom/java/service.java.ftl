@@ -33,6 +33,13 @@ public interface I${tableInfo.tableNameGreatHump}Service extends IService<${tabl
     IPage<${tableInfo.tableNameGreatHump}Vo> getByPage(${tableInfo.tableNameGreatHump}PageDto dto);
 
     /**
+     * 查询${tableInfo.tableComment!}集合
+     *
+     * @return {@link List}
+     */
+    List<${tableInfo.tableNameGreatHump}Vo> getList();
+
+    /**
      * 根据id查询${tableInfo.tableComment!}
      *
      * @param id 主键
@@ -40,14 +47,14 @@ public interface I${tableInfo.tableNameGreatHump}Service extends IService<${tabl
      */
     ${tableInfo.tableNameGreatHump}Vo queryById(String id);
 
-    <#if tableInfo.isGenerateTreeSelect!false>
+<#if tableInfo.isGenerateTreeSelect!false>
     /**
      * ${tableInfo.tableComment!}树结构
      *
      * @return {@link List}
      */
     List<TreeNode> getTree();
-    </#if>
+</#if>
 
     /**
      * 新增${tableInfo.tableComment!}
@@ -72,4 +79,11 @@ public interface I${tableInfo.tableNameGreatHump}Service extends IService<${tabl
      * @return boolean
     */
     boolean deleteBatchByIdList(List<String> idList);
+
+<#if tableInfo.isCache!false>
+    /**
+     * 初始化缓存
+     */
+    void initCache();
+</#if>
 }

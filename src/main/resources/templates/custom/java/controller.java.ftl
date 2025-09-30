@@ -57,6 +57,17 @@ public class ${tableInfo.tableNameGreatHump}Controller {
     }
 
     /**
+     * 查询${tableInfo.tableComment!}集合
+     *
+     * @return {@link RespJson}
+     */
+    @GetMapping("getList")
+    @Operation(summary = "查询${tableInfo.tableComment!}集合")
+    public RespJson<List<${tableInfo.tableNameGreatHump}Vo>> getList() {
+        return RespJson.success(service.getList());
+    }
+
+    /**
      * 根据id查询${tableInfo.tableComment!}
      *
      * @param id 主键
@@ -68,7 +79,7 @@ public class ${tableInfo.tableNameGreatHump}Controller {
         return RespJson.success(service.queryById(id));
     }
 
-    <#if tableInfo.isGenerateTreeSelect!false>
+<#if tableInfo.isGenerateTreeSelect!false>
     /**
      * ${tableInfo.tableComment!}树结构
      *
@@ -79,7 +90,7 @@ public class ${tableInfo.tableNameGreatHump}Controller {
     public RespJson<List<TreeNode>> getTree() {
        return RespJson.success(service.getTree());
     }
-    </#if>
+</#if>
 
     /**
      * 新增${tableInfo.tableComment!}

@@ -16,10 +16,10 @@ import lombok.Setter;
 public class UpdateInfo {
 
     @Schema(description = "主键")
-    @NotBlank(message = "id.empty")
+    @NotBlank(message = "主键主键不能为空")
     private String id;
 
     @Schema(description = "乐观锁")
-    @NotNull(message = "version.empty")
+    @NotNull(message = "乐观锁不能为空")
     private Integer version;
 }

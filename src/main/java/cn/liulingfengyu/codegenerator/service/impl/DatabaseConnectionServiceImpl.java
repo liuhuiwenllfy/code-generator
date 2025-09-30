@@ -61,7 +61,7 @@ public class DatabaseConnectionServiceImpl extends ServiceImpl<DatabaseConnectio
 
     @Override
     public boolean deleteBatchByIdList(List<String> idList) {
-        return baseMapper.deleteBatchIds(idList) > 0;
+        return baseMapper.deleteByIds(idList) > 0;
     }
 
 }

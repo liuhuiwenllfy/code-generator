@@ -2,7 +2,6 @@ package cn.liulingfengyu.codegenerator.controller;
 
 import cn.liulingfengyu.codegenerator.dto.GenerateCodeDto;
 import cn.liulingfengyu.codegenerator.dto.TableInfoDto;
-import cn.liulingfengyu.codegenerator.emnus.UiTypeEnum;
 import cn.liulingfengyu.codegenerator.service.ICodeGeneratorService;
 import cn.liulingfengyu.codegenerator.vo.TableAndFieldVo;
 import cn.liulingfengyu.codegenerator.vo.TableIdAndCommentVo;
@@ -16,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 代码生成器控制器

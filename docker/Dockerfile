@@ -9,10 +9,10 @@ WORKDIR /app
 # 将文件或目录复制到镜像中。
 ADD code-generator.jar /app/app.jar
 # 在构建过程中在镜像中执行命令。
-RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 # 它将echo命令的输出写入到/etc/apk/repositories文件中
-&& echo 'https://mirrors.aliyun.com/alpine/v3.6/main' > /etc/apk/repositories \
 # 它将echo命令的输出追加到/etc/apk/repositories文件的末尾
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+&& echo 'https://mirrors.aliyun.com/alpine/v3.6/main' > /etc/apk/repositories \
 && echo 'https://mirrors.aliyun.com/alpine/v3.6/community' >> /etc/apk/repositories \
 && apk update \
 && apk upgrade \
